@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/26 14:49:41 by tkeil             #+#    #+#              #
-#    Updated: 2025/06/26 15:43:00 by tkeil            ###   ########.fr        #
+#    Updated: 2025/06/26 16:29:07 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,25 @@ def main():
 	if missing2:
 		print("\n\033[92mWords in file2 but not in file1:\033[0m")
 		print_diff(missing2)
+	
+	input = input("\nWrite the missing words to a file? (y/n): ").strip().lower()
+	if input == 'y':
+		output_file = input("Enter the output file name: ").strip()
+		try:
+			with open(output_file, 'w', encoding='utf-8') as file:
+				if missing1:
+					file.write("Words in file1 but not in file2:\n")
+					for word in sorted(missing1):
+						file.write(word + '\n')
+				if missing2:
+					file.write("Words in file2 but not in file1:\n")
+					for word in sorted(missing1):
+						file.write(word + '\n')
+			print(f"Missing words written to {output_file}")
+
+		except IOError as e:
+			print(f"Error writing to file '{output_file}': {e}")
+		
 
 if __name__ == "__main__":
 	main()
